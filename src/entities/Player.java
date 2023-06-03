@@ -65,7 +65,7 @@ public class Player extends Entity {
 	
 	public void update() {
 
-		if (health <= 0 || hitbox.y >= 800) {
+		if (health <= 0 || hitbox.y >= 620) {
 			if (state != DEAD) {
 				state = DEAD;
 				aniTick = 0;
