@@ -154,7 +154,7 @@ public class Playing extends State {
 		case KeyEvent.VK_D:
 			player.setRight(true);
 			break;
-		case KeyEvent.VK_SPACE:
+		case KeyEvent.VK_W:
 			player.setJump(true);
 			if(player.isInAir() && player.canJumpAgain()) {
 				player.setDoubleJump(true);
@@ -177,7 +177,7 @@ public class Playing extends State {
 			case KeyEvent.VK_D:
 				player.setRight(false);
 				break;
-			case KeyEvent.VK_SPACE:
+			case KeyEvent.VK_W:
 				player.setJump(false);
 				if(!player.canJumpAgain()) player.setDoubleJump(false);
 				break;
