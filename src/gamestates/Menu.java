@@ -16,23 +16,24 @@ public class Menu extends State {
 
 	public Menu(Game game) {
 		super(game);
-		loadImg();
+		loadButtons();
+		loadBackground();
 		bgMenu = LoadSave.GetImg("background.png");
 
 	}
 
-	private void loadImg() {
-		//background
+	private void loadBackground() {
 		menuLabel = LoadSave.GetImg("menu.png");
 		w = (int) (menuLabel.getWidth() * Game.SCALE);
 		h = (int) (menuLabel.getHeight() * Game.SCALE);
 		x = Game.GWIDTH / 2 - w / 2;
 		y = (int) (45 * Game.SCALE);
-		//buttons
+	}
+
+	private void loadButtons() {
 		buttons[0] = new MenuButton(Game.GWIDTH / 2, (int) (180 * Game.SCALE), 0, Gamestate.PLAYING);
 		buttons[1] = new MenuButton(Game.GWIDTH / 2, (int) (260 * Game.SCALE), 2, Gamestate.QUIT);
 	}
-
 
 	
 	public void update() {
@@ -41,7 +42,7 @@ public class Menu extends State {
 	}
 
 	
-	public void render(Graphics g) {
+	public void draw(Graphics g) {
 
 		g.drawImage(bgMenu, 0, 0, Game.GWIDTH, Game.GHEIGHT, null);
 		g.drawImage(menuLabel, x, y, w, h, null);
