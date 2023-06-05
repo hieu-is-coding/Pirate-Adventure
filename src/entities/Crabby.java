@@ -15,10 +15,10 @@ import main.Game;
 
 public class Crabby extends Entity {
 	
-	protected int direction = LEFT;
-	protected float attDis = Game.TILES_SIZE;
-	protected boolean alive = true;
-	protected boolean attCheck;
+	private int direction = LEFT;
+	private float attDis = Game.TILES_SIZE;
+	private boolean alive = true;
+	private boolean attCheck;
 	private int OffsetX;
 
 	public Crabby(float x, float y) {
@@ -32,7 +32,7 @@ public class Crabby extends Entity {
 
 	public void update(int[][] LevelSprites, Player player) {
 		updateBehavior(LevelSprites, player);
-		updateAnimationTick();
+		updateAnimation();
 		hitzone.x = hitbox.x - OffsetX;
 		hitzone.y = hitbox.y;
 	}
@@ -78,7 +78,7 @@ public class Crabby extends Entity {
 		}
 	}
 	
-	protected void updateAnimationTick() {
+	private void updateAnimation() {
 		aniTick++;
 		if (aniTick >= NORMAL_SPEED) {
 			aniTick = 0;
@@ -99,7 +99,7 @@ public class Crabby extends Entity {
 	}
 
 
-	protected void move(int[][] LevelSprites) {
+	private void move(int[][] LevelSprites) {
 		float xSpeed = 0;
 
 		if (direction == LEFT)
@@ -119,14 +119,14 @@ public class Crabby extends Entity {
 			direction = LEFT;
 	}
 
-	protected void FaceTowardPlayer(Player player) {
+	private void FaceTowardPlayer(Player player) {
 		if (player.hitbox.x > hitbox.x)
 			direction = RIGHT;
 		else
 			direction = LEFT;
 	}
 
-	protected boolean OnView(int[][] LevelSprites, Player player) {
+	private boolean OnView(int[][] LevelSprites, Player player) {
 		//check if player is on the same tiles 
 		if ((int) (player.getHitbox().y / Game.TILES_SIZE) == (int) (hitbox.y / Game.TILES_SIZE))
 			if (isPlayerInRange(player)) {
@@ -136,17 +136,17 @@ public class Crabby extends Entity {
 		return false;
 	}
 
-	protected boolean isPlayerInRange(Player player) {
+	private boolean isPlayerInRange(Player player) {
 		int possible = (int) Math.abs(player.hitbox.x - hitbox.x);
-		return possible <= attDis * 5;
+		return possible <= attDis * 6;
 	}
 
-	protected boolean InAttackRange(Player player) {
+	private boolean InAttackRange(Player player) {
 		int possible = (int) Math.abs(player.hitbox.x - hitbox.x);
 		return possible <= attDis;
 	}
 
-	protected void ChangeState(int enemyState) {
+	private void ChangeState(int enemyState) {
 		this.state = enemyState;
 		aniTick = 0;
 		aniIndex = 0;

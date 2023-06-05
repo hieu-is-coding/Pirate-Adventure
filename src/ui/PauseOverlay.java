@@ -21,7 +21,7 @@ public class PauseOverlay {
 
 	public PauseOverlay(Playing playing) {
 		this.playing = playing;
-		loadBackground();
+		loadImg();
 
 		createUrmButtons();
 
@@ -38,7 +38,7 @@ public class PauseOverlay {
 		pause = new UrmButton(pauseX, bY, URM_SIZE, URM_SIZE, 0);
 	}
 
-	private void loadBackground() {
+	private void loadImg() {
 		image = LoadSave.GetImg("pause.png");
 		w = (int) (image.getWidth() * Game.SCALE);
 		h = (int) (image.getHeight() * Game.SCALE);
@@ -53,7 +53,7 @@ public class PauseOverlay {
 
 	}
 
-	public void draw(Graphics g) {
+	public void render(Graphics g) {
 		g.drawImage(image, x, y, w, h, null);
 
 		menu.render(g);
@@ -63,26 +63,26 @@ public class PauseOverlay {
 	}
 
 	public void mousePressed(MouseEvent e) {
-		if (isIn(e, menu))
+		if (BoundCheck(e, menu))
 			menu.setMousePressed(true);
-		else if (isIn(e, replay))
+		else if (BoundCheck(e, replay))
 			replay.setMousePressed(true);
-		else if (isIn(e, pause))
+		else if (BoundCheck(e, pause))
 			pause.setMousePressed(true);
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		if (isIn(e, menu)) {
+		if (BoundCheck(e, menu)) {
 			if (menu.isMousePressed()) {
 				playing.setGamestate(Gamestate.MENU);
 				playing.backInG();
 			}
-		} else if (isIn(e, replay)) {
+		} else if (BoundCheck(e, replay)) {
 			if (replay.isMousePressed()) {
 				playing.resetAll();
 				playing.backInG();
 			}
-		} else if (isIn(e, pause)) {
+		} else if (BoundCheck(e, pause)) {
 			if (pause.isMousePressed())
 				playing.backInG();
 		}
@@ -98,15 +98,15 @@ public class PauseOverlay {
 		replay.setMouseOver(false);
 		pause.setMouseOver(false);
 
-		if (isIn(e, menu))
+		if (BoundCheck(e, menu))
 			menu.setMouseOver(true);
-		else if (isIn(e, replay))
+		else if (BoundCheck(e, replay))
 			replay.setMouseOver(true);
-		else if (isIn(e, pause))
+		else if (BoundCheck(e, pause))
 			pause.setMouseOver(true);
 	}
 
-	private boolean isIn(MouseEvent e, UrmButton b) {
+	private boolean BoundCheck(MouseEvent e, UrmButton b) {
 		return b.getBounds().contains(e.getX(), e.getY());
 	}
 

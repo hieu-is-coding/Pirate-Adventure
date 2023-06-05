@@ -115,11 +115,11 @@ public class Playing extends State {
 		if (paused) {
 			g.setColor(new Color(0, 0, 0, 150));
 			g.fillRect(0, 0, Game.GWIDTH, Game.GHEIGHT);
-			PauseO.draw(g);
+			PauseO.render(g);
 		} else if (gameOver)
-			GameO.draw(g);
+			GameO.render(g);
 		else if (lvlCompleted)
-			LevelO.draw(g);
+			LevelO.render(g);
 	}
 
 	public void resetAll() {
@@ -154,7 +154,7 @@ public class Playing extends State {
 		case KeyEvent.VK_D:
 			player.setRight(true);
 			break;
-		case KeyEvent.VK_W:
+		case KeyEvent.VK_SPACE:
 			player.setJump(true);
 			if(player.isInAir() && player.canJumpAgain()) {
 				player.setDoubleJump(true);
@@ -177,7 +177,7 @@ public class Playing extends State {
 			case KeyEvent.VK_D:
 				player.setRight(false);
 				break;
-			case KeyEvent.VK_W:
+			case KeyEvent.VK_SPACE:
 				player.setJump(false);
 				if(!player.canJumpAgain()) player.setDoubleJump(false);
 				break;

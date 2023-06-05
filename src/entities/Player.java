@@ -41,13 +41,13 @@ public class Player extends Entity {
 		this.state = IDLE;
 		this.health = 100;
 		this.walkSpeed = Game.SCALE * 1.0f;
-		loadAnimations();
+		loadImg();
 		initHitbox(20, 27);
 		hitzone = new Rectangle2D.Float(x, y, (int) (20 * Game.SCALE), (int) (20 * Game.SCALE));
 		this.LevelNo = playing.getLevelManager().getLevelIndex();
 	}
 	
-	private void loadAnimations() {
+	private void loadImg() {
 		BufferedImage img = LoadSave.GetImg("player.png");
 		animations = new BufferedImage[7][8];
 		for (int j = 0; j < animations.length; j++)
@@ -65,7 +65,7 @@ public class Player extends Entity {
 	
 	public void update() {
 
-		if (health <= 0 || hitbox.y >= 620) {
+		if (health <= 0 || hitbox.y >= 600) {
 			if (state != DEAD) {
 				state = DEAD;
 				aniTick = 0;
@@ -77,7 +77,7 @@ public class Player extends Entity {
 				playing.getGame().getAudioPlayer().stopSong();
 				playing.getGame().getAudioPlayer().playEffect(AudioPlayer.GAMEOVER);
 			} else
-				updateAnimationTick();
+				updateAnimation();
 
 			return;
 		}
@@ -86,7 +86,7 @@ public class Player extends Entity {
 		updatePos();
 		if (attacking)
 			checkAttack();
-		updateAnimationTick();
+		updateAnimation();
 		setAnimation();
 	}
 
@@ -113,7 +113,7 @@ public class Player extends Entity {
 		g.drawImage(animations[state][aniIndex], (int) (hitbox.x - xOffset) - lvlOffset + Xrotate, (int) (hitbox.y - yOffset), width * Wrotate, height, null);
 	}
 
-	private void updateAnimationTick() {
+	private void updateAnimation() {
 		aniTick++;
 		if (aniTick >= NORMAL_SPEED) {
 			aniTick = 0;
@@ -194,7 +194,6 @@ public class Player extends Entity {
 		if (!inAir)
 			if (!CheckAboveFloor(hitbox, LevelSprites))
 				inAir = true;
-
 
 		if (inAir) {
 

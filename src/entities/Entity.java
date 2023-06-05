@@ -25,6 +25,7 @@ public abstract class Entity {
 		this.height = height;
 	}
 
+	//debugging
 	protected void drawAttackBox(Graphics g, int xLvlOffset) {
 		g.setColor(Color.red);
 		g.drawRect((int) (hitzone.x - xLvlOffset), (int) hitzone.y, (int) hitzone.width, (int) hitzone.height);
