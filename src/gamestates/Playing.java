@@ -37,6 +37,32 @@ public class Playing extends State {
 	public Playing(Game game) {
 		super(game);
 		timeCheck = System.currentTimeMillis();
+		initClasses();
+		loadBackground();
+
+		calcLvlOffset();
+		loadStartLevel();
+	}
+
+	public void loadNextLevel() {
+		resetAll();
+		LManager.NextLevel();
+		player.setSpawn(LManager.getCurrentLevel().getPlayerSpawn());
+	}
+
+	private void loadStartLevel() {
+		EManger.loadEnemies(LManager.getCurrentLevel());
+	}
+
+	private void calcLvlOffset() {
+		maxLvlOffsetX = LManager.getCurrentLevel().getLvlOffset();
+	}
+	
+	private void loadBackground() {
+		backgroundImg = LoadSave.GetImg("playing.png");
+		CLOUD = LoadSave.GetImg("clouds.png");
+	}
+	private void initClasses() {
 		LManager = new LevelManager(game);
 		EManger = new EnemyManager(this);
 
@@ -47,21 +73,6 @@ public class Playing extends State {
 		PauseO = new PauseOverlay(this);
 		GameO = new GameOverOverlay(this);
 		LevelO = new LevelCompletedOverlay(this);
-		loadImg();
-
-		maxLvlOffsetX = LManager.getCurrentLevel().getLvlOffset();
-		EManger.loadEnemies(LManager.getCurrentLevel());
-	}
-
-	public void loadNextLevel() {
-		resetAll();
-		LManager.NextLevel();
-		player.setSpawn(LManager.getCurrentLevel().getPlayerSpawn());
-	}
-	
-	private void loadImg() {
-		backgroundImg = LoadSave.GetImg("playing.png");
-		CLOUD = LoadSave.GetImg("clouds.png");
 	}
 
 	public void update() {
@@ -101,12 +112,10 @@ public class Playing extends State {
 	}
 
 
-	public void render(Graphics g) {
+	public void draw(Graphics g) {
 		g.drawImage(backgroundImg, 0, 0, Game.GWIDTH, Game.GHEIGHT, null);
-		
-		// cloud render
-		for (int i = 0; i < 3; i++)
-			g.drawImage(CLOUD, i * CLOUD_WID - (int) (xLvlOffset * 0.3), (int) (204 * Game.SCALE), CLOUD_WID, CLOUD_HEI, null);
+
+		CloudRender(g);
 
 		LManager.render(g, xLvlOffset);
 		player.render(g, xLvlOffset);
@@ -120,6 +129,11 @@ public class Playing extends State {
 			GameO.draw(g);
 		else if (lvlCompleted)
 			LevelO.draw(g);
+	}
+
+	private void CloudRender(Graphics g) {
+		for (int i = 0; i < 3; i++)
+			g.drawImage(CLOUD, i * CLOUD_WID - (int) (xLvlOffset * 0.3), (int) (204 * Game.SCALE), CLOUD_WID, CLOUD_HEI, null);
 	}
 
 	public void resetAll() {
@@ -154,7 +168,7 @@ public class Playing extends State {
 		case KeyEvent.VK_D:
 			player.setRight(true);
 			break;
-		case KeyEvent.VK_W:
+		case KeyEvent.VK_SPACE:
 			player.setJump(true);
 			if(player.isInAir() && player.canJumpAgain()) {
 				player.setDoubleJump(true);
@@ -177,7 +191,7 @@ public class Playing extends State {
 			case KeyEvent.VK_D:
 				player.setRight(false);
 				break;
-			case KeyEvent.VK_W:
+			case KeyEvent.VK_SPACE:
 				player.setJump(false);
 				if(!player.canJumpAgain()) player.setDoubleJump(false);
 				break;
