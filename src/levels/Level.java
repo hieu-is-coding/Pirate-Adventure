@@ -15,14 +15,14 @@ public class Level {
 
 	private BufferedImage image;
 	private int[][] LevelSprites;
-	private ArrayList<Crabby> crabs;
+	private ArrayList<Crabby> crabies;
 	private int lvlTilesWide, maxTilesOffset, maxLvlOffset;
 	private Point playerSpawn;
 
 	public Level(BufferedImage image) {
 		this.image = image;
 		LevelSprites = GetLevelData(image);
-		crabs = GetCrabs(image);
+		crabies = GetCrabs(image);
 		lvlTilesWide = image.getWidth();
 		maxTilesOffset = lvlTilesWide - Game.TILES_WID;
 		maxLvlOffset = Game.TILES_SIZE * maxTilesOffset;
@@ -43,7 +43,7 @@ public class Level {
 	}
 
 	public ArrayList<Crabby> takeCrabs() {
-		return crabs;
+		return crabies;
 	}
 
 	public Point getPlayerSpawn() {

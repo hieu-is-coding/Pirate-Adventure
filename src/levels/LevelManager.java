@@ -18,7 +18,7 @@ public class LevelManager {
 	public LevelManager(Game game) {
 		this.game = game;
 		levels = new ArrayList<>();
-		getGroundImg();
+		loadImg();
 		InitLevels();
 	}
 
@@ -42,7 +42,7 @@ public class LevelManager {
 			levels.add(new Level(img));
 	}
 
-	private void getGroundImg() {
+	private void loadImg() {
 		BufferedImage img = LoadSave.GetImg("ground.png");
 		image = new BufferedImage[48];
 		for (int j = 0; j < 4; j++)

@@ -66,10 +66,10 @@ public class Game implements Runnable {
 	public void render(Graphics g) {
 		switch (Gamestate.state) {
 		case MENU:
-			menu.draw(g);
+			menu.render(g);
 			break;
 		case PLAYING:
-			playing.draw(g);
+			playing.render(g);
 			break;
 		default:
 			break;

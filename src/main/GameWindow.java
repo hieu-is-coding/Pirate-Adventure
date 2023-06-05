@@ -1,4 +1,4 @@
-package main;
+ package main;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
@@ -15,7 +15,7 @@ public class GameWindow {
 		frame.add(panel);
 		frame.setResizable(false);
 		frame.pack();
-		frame.setLocationRelativeTo(null);
+		frame.setLocationRelativeTo(null);       
 		frame.setVisible(true);
 		frame.addWindowFocusListener(new WindowFocusListener() {
 			@Override
