@@ -40,7 +40,7 @@ public class GameOverOverlay {
 
 	}
 
-	public void draw(Graphics g) {
+	public void render(Graphics g) {
 		g.setColor(new Color(0, 0, 0, 200));
 		g.fillRect(0, 0, Game.GWIDTH, Game.GHEIGHT);
 

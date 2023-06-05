@@ -21,16 +21,12 @@ public class UrmButton {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		initBounds();
-		getImgs();
-	}
-
-	private void initBounds() {
 		hitbox = new Rectangle(x, y, width, height);
+		loadImg();
 	}
 
 	
-	private void getImgs() {
+	private void loadImg() {
 		BufferedImage temp = LoadSave.GetImg("urm_buttons.png");
 		image = new BufferedImage[3];
 		for (int i = 0; i < image.length; i++)
