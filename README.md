@@ -3,3 +3,6 @@ Pirates Adventure is a Platformer Game - a type of 2D video game in which the pl
 
 All java classes are used (in our team code) in a source folder named "src".
 res also needs to be a source folder.
+
+### Be careful 
+Unikey can affect the game movements.
