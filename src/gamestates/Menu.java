@@ -1,9 +1,8 @@
 package gamestates;
 
-import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-
+import java.awt.image.*;
+import java.awt.event.*;
+import java.awt.*;
 import main.Game;
 import ui.MenuButton;
 import utilz.LoadSave;

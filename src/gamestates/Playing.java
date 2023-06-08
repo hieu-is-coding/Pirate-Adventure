@@ -1,12 +1,9 @@
 package gamestates;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-
+import java.awt.*;
+import java.awt.event.*;
 import entities.*;
 import levels.LevelManager;
 import main.Game;
@@ -18,16 +15,13 @@ public class Playing extends State {
 	private Player player;
 	private LevelManager LManager;
 	private EnemyManager EManger;
-	private PauseOverlay PauseO;
+	private PauseOverlay PauseO; //pause gui
 	private GameOverOverlay GameO;
 	private LevelCompletedOverlay LevelO;
 	private boolean paused = false;
-
 	private int xLvlOffset;
 	private int maxLvlOffsetX;
-
 	private BufferedImage backgroundImg, CLOUD;
-
 	private boolean gameOver;
 	private boolean lvlCompleted;
 	private boolean playerDying;
@@ -36,21 +30,17 @@ public class Playing extends State {
 
 	public Playing(Game game) {
 		super(game);
-		
 		LManager = new LevelManager(game);
 		EManger = new EnemyManager(this);
-
 		player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE), this);
-		player.loadLvlData(LManager.getCurrentLevel().getLevelData());
-		player.setSpawn(LManager.getCurrentLevel().getPlayerSpawn());
-
+		player.loadLvlData(LManager.getCurrentLevel().getLevelData()); //loadLvl
+		player.setSpawn(LManager.getCurrentLevel().getPlayerSpawn()); //spawn
 		PauseO = new PauseOverlay(this);
 		GameO = new GameOverOverlay(this);
 		LevelO = new LevelCompletedOverlay(this);
 		loadImg();
-
 		maxLvlOffsetX = LManager.getCurrentLevel().getLvlOffset();
-		EManger.loadEnemies(LManager.getCurrentLevel());
+		EManger.loadEnemies(LManager.getCurrentLevel()); //load enemy
 	}
 
 	public void loadNextLevel() {

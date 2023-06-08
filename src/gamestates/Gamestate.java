@@ -1,6 +1,6 @@
 package gamestates;
 
-public enum Gamestate {
+public enum Gamestate { //enumerate through the states
 
 	PLAYING, MENU, OPTIONS, QUIT;
 

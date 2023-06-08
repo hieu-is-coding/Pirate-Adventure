@@ -1,7 +1,6 @@
 package inputs;
 
 import java.awt.event.*;
-
 import gamestates.Gamestate;
 import main.GamePanel;
 
@@ -12,12 +11,9 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 	public MouseInputs(GamePanel panel) {
 		this.panel = panel;
 	}
-
-	@Override
 	public void mouseDragged(MouseEvent e) {
 	}
 
-	@Override
 	public void mouseMoved(MouseEvent e) {
 		switch (Gamestate.state) {
 		case MENU:
@@ -33,7 +29,6 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
 	}
 
-	@Override
 	public void mouseClicked(MouseEvent e) {
 		switch (Gamestate.state) {
 		case PLAYING:
@@ -46,7 +41,6 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
 	}
 
-	@Override
 	public void mousePressed(MouseEvent e) {
 		switch (Gamestate.state) {
 		case MENU:
@@ -62,7 +56,6 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
 	}
 
-	@Override
 	public void mouseReleased(MouseEvent e) {
 		switch (Gamestate.state) {
 		case MENU:
@@ -75,16 +68,9 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 			break;
 
 		}
-
 	}
-
-	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
-
-	@Override
 	public void mouseExited(MouseEvent e) {
 
 	}

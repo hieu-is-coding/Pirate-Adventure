@@ -24,15 +24,12 @@ public class AudioPlayer {
 	public static final int MENU_1 = 0;
 	public static final int LEVEL_1 = 1;
 	public static final int LEVEL_2 = 2;
-	
 	// aud effects (7 cai)
 //	public static final int DIE = 1;
-	
 	public static final int DIE = 0;
 	public static final int JUMP = 1;
 	public static final int GAMEOVER = 2;
 	public static final int LVL_COMPLETED = 3;
-
 	public static final int ATTACK_ONE = 4;
 	public static final int ATTACK_TWO = 5;
 	public static final int ATTACK_THREE = 6;
@@ -55,7 +52,7 @@ public class AudioPlayer {
 	private void getSongs() {
 		
 		songs = new Clip[3];
-		songs[0] = getClip ("menu");
+		songs[0] = getClip ("test");
 		
 		songs[1] = getClip("level1");
 		songs[2] = getClip("level2");

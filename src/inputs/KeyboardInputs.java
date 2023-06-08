@@ -1,8 +1,5 @@
 package inputs;
-
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
+import java.awt.event.*;
 import gamestates.Gamestate;
 import main.GamePanel;
 
@@ -13,13 +10,9 @@ public class KeyboardInputs implements KeyListener {
 	public KeyboardInputs(GamePanel panel) {
 		this.panel = panel;
 	}
-
-	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 	}
-
-	@Override
+	//handle key release
 	public void keyReleased(KeyEvent e) {
 		switch (Gamestate.state) {
 		case PLAYING:
@@ -30,8 +23,7 @@ public class KeyboardInputs implements KeyListener {
 
 		}
 	}
-
-	@Override
+	//handle keyPressed
 	public void keyPressed(KeyEvent e) {
 		switch (Gamestate.state) {
 		case PLAYING:
