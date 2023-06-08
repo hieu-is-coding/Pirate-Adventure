@@ -5,8 +5,10 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import gamestates.Gamestate;
+import gamestates.Playing;
 import main.Game;
 import utilz.LoadSave;
+import ranking.ScoreBoard;
 
 public class LevelManager {
 
@@ -23,10 +25,14 @@ public class LevelManager {
 	}
 
 	public void NextLevel() {
+		//check current level;
 		LevelNo++;
-		if (LevelNo >= levels.size()) {
+		if (LevelNo >= 1) {
 			LevelNo = 0;
 			System.out.println("CONGRATULATION! YOU WIN");
+			System.out.println("Total played time:" + (int) Playing.getTime()/1000);
+			//display scoreboard
+			new ScoreBoard((int) Playing.getTime()/1000);
 			Gamestate.state = Gamestate.MENU;
 		}
 
@@ -36,6 +42,7 @@ public class LevelManager {
 		game.getPlaying().setMaxLvlOffset(newLevel.getLvlOffset());
 	}
 
+	//get all levels
 	private void InitLevels() {
 		BufferedImage[] allLevels = LoadSave.GetAllLevels();
 		for (BufferedImage img : allLevels)
@@ -59,8 +66,7 @@ public class LevelManager {
 				g.drawImage(image[index], Game.TILES_SIZE * i - offsetTiles, Game.TILES_SIZE * j, Game.TILES_SIZE, Game.TILES_SIZE, null);
 			}
 	}
-
-
+	
 	public Level getCurrentLevel() {
 		return levels.get(LevelNo);
 	}

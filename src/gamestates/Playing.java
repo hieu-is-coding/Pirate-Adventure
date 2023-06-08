@@ -32,11 +32,11 @@ public class Playing extends State {
 	private boolean lvlCompleted;
 	private boolean playerDying;
 	
-	public long timeCheck, lastCheck;
+	private static long timeCheck=-1, lastCheck, timeOutF=-1, timeOutL, totalTimeOut;
 
 	public Playing(Game game) {
 		super(game);
-		timeCheck = System.currentTimeMillis();
+		
 		LManager = new LevelManager(game);
 		EManger = new EnemyManager(this);
 
@@ -65,19 +65,34 @@ public class Playing extends State {
 	}
 
 	public void update() {
+		//get the time starting level;
+		if(timeCheck==-1) timeCheck = System.currentTimeMillis();
 		if (paused) {
+			if(timeOutF==-1) timeOutF =  System.currentTimeMillis();
 			PauseO.update();
+			timeOutL = System.currentTimeMillis();
 		} else if (lvlCompleted) {
+			if(timeOutF==-1) timeOutF =  System.currentTimeMillis();
 			LevelO.update();
+			timeOutL = System.currentTimeMillis();
 		} else if (gameOver) {
+			if(timeOutF==-1) timeOutF =  System.currentTimeMillis();
 			GameO.update();
+			timeOutL = System.currentTimeMillis();
 		} else if (playerDying) {
+			if(timeOutF==-1) timeOutF =  System.currentTimeMillis();
 			player.update();
+			timeOutL = System.currentTimeMillis();
 		} else {
-			lastCheck = System.currentTimeMillis();
 			player.update();
 			EManger.update(LManager.getCurrentLevel().getLevelData(), player);
 			checkCloseBorder();
+			//get last time playing and set time out
+			if(timeOutF!=-1) {
+				totalTimeOut += timeOutL - timeOutF;
+				timeOutF = -1;
+			}
+			lastCheck = System.currentTimeMillis();
 		}
 	}
 	
@@ -156,10 +171,10 @@ public class Playing extends State {
 			break;
 		case KeyEvent.VK_W:
 			player.setJump(true);
-			if(player.isInAir() && player.canJumpAgain()) {
-				player.setDoubleJump(true);
-				player.setJumpAgain();
-			}
+//			if(player.isInAir() && player.canJumpAgain()) {
+//				player.setDoubleJump(true);
+//				player.setJumpAgain();
+//			}
 			break;
 		case KeyEvent.VK_ESCAPE:
 			paused = !paused;
@@ -219,7 +234,6 @@ public class Playing extends State {
 
 	public void setLevelCompleted() {
 		this.lvlCompleted = true;
-		System.out.println("Played time: " + (lastCheck - timeCheck));
 		game.getAudioPlayer().lvlCompleted();
 	}
 
@@ -255,5 +269,8 @@ public class Playing extends State {
 	public boolean getLvlCompleted() {
 		return lvlCompleted;
 	}
-
+	
+	public static long getTime() {
+		return lastCheck - timeCheck - totalTimeOut;
+	}
 }

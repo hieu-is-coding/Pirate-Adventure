@@ -15,6 +15,22 @@ import levels.LevelManager;
 import main.Game;
 import utilz.LoadSave;
 
+
+
+/*
+ * load img for player animations
+ * set spawn position in x-y, include hitbox x-y
+ * update state and position, check health, update hitzone, pos, animation accordingly
+ * chekc attack and hit
+ * update hitzone (position n sz)
+ * 
+ * render player, update ani, pos, xpos with hitbox, load level data
+ * 
+ * reset all
+ * 
+ */
+
+
 public class Player extends Entity {
 
 	private BufferedImage[][] animations;
@@ -41,18 +57,23 @@ public class Player extends Entity {
 		this.state = IDLE;
 		this.health = 100;
 		this.walkSpeed = Game.SCALE * 1.0f;
+		
 		loadImg();
 		initHitbox(20, 27);
 		hitzone = new Rectangle2D.Float(x, y, (int) (20 * Game.SCALE), (int) (20 * Game.SCALE));
 		this.LevelNo = playing.getLevelManager().getLevelIndex();
+		
 	}
 	
 	private void loadImg() {
+		
 		BufferedImage img = LoadSave.GetImg("player.png");
 		animations = new BufferedImage[7][8];
-		for (int j = 0; j < animations.length; j++)
-			for (int i = 0; i < animations[j].length; i++)
+		for (int j = 0; j < animations.length; j++) {
+			for (int i = 0; i < animations[j].length; i++) {
 				animations[j][i] = img.getSubimage(i * 64, j * 40, 64, 40);
+			}
+		}
 	}
 
 	public void setSpawn(Point spawn) {
@@ -63,6 +84,8 @@ public class Player extends Entity {
 		
 	}
 	
+	// check
+	// them neu nhu dang attack, check attack
 	public void update() {
 
 		if (health <= 0 || hitbox.y >= 600) {
@@ -71,6 +94,7 @@ public class Player extends Entity {
 				aniTick = 0;
 				aniIndex = 0;
 				playing.setPlayerDead(true);
+				
 				playing.getGame().getAudioPlayer().playEffect(AudioPlayer.DIE);
 			} else if (aniIndex == GetAniTotal(DEAD) - 1 && aniTick >= NORMAL_SPEED - 1) {
 				playing.setGameOver();
@@ -84,8 +108,12 @@ public class Player extends Entity {
 
 		updateHitzone();
 		updatePos();
-		if (attacking)
+		
+		
+		
+		if (attacking) {
 			checkAttack();
+		}
 		updateAnimation();
 		setAnimation();
 	}
@@ -100,11 +128,11 @@ public class Player extends Entity {
 	}
 
 	private void updateHitzone() {
-		if (right)
+		if (right) {
 			hitzone.x = hitbox.x + hitbox.width + (int) (Game.SCALE * 10);
-		else if (left)
+		} else if (left) {
 			hitzone.x = hitbox.x - hitbox.width - (int) (Game.SCALE * 10);
-
+		}
 		hitzone.y = hitbox.y + (Game.SCALE * 10);
 	}
 
@@ -216,7 +244,7 @@ public class Player extends Entity {
 			updateXPos(xSpeed);
 		moving = true;
 	}
-
+//update horitzontal position nx
 
 	private void updateXPos(float xSpeed) {
 		if (Movable(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, LevelSprites))
@@ -289,3 +317,6 @@ public class Player extends Entity {
 
 
 }
+
+
+

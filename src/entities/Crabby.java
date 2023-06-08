@@ -1,5 +1,6 @@
 package entities;
 
+//import may cai tu util voi import Game trong main nhe
 import static utilz.Constants.CrabEnemy.*;
 import static utilz.HelpMethods.Movable;
 import static utilz.HelpMethods.CheckAboveFloor;
@@ -13,36 +14,52 @@ import static utilz.Constants.Directions.*;
 
 import main.Game;
 
+
+
 public class Crabby extends Entity {
 	
 	private int direction = LEFT;
+	private int OffsetX;
+
 	private float attDis = Game.TILES_SIZE;
 	private boolean alive = true;
 	private boolean attCheck;
-	private int OffsetX;
-
+	
+// set up hitbox, hitzone luon
 	public Crabby(float x, float y) {
 		super(x, y, CRAB_WID, CRAB_HEI);
 		health = 10;
 		walkSpeed = Game.SCALE * 0.35f;
+		
+		
 		initHitbox(22, 19);
 		hitzone = new Rectangle2D.Float(x, y, (int) (82 * Game.SCALE), (int) (19 * Game.SCALE));
 		OffsetX = (int) (Game.SCALE * 30);
+		
 	}
 
+	
+	// update crab behavior and animation, hitzone position
 	public void update(int[][] LevelSprites, Player player) {
+		
 		updateBehavior(LevelSprites, player);
 		updateAnimation();
 		hitzone.x = hitbox.x - OffsetX;
 		hitzone.y = hitbox.y;
+		
+		
 	}
 
+	
+	// handle movement, jump, facing direction, attack logic
 	private void updateBehavior(int[][] LevelSprites, Player player) {
-		if (!CheckAboveFloor(hitbox, LevelSprites))
+		if (!CheckAboveFloor(hitbox, LevelSprites)) {
 			inAir = true;
 
-		if (inAir)
-		{
+		}
+
+		if (inAir) {
+			
 			if (Movable(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, LevelSprites)) {
 				hitbox.y += airSpeed;
 				airSpeed += GRAVITY;
@@ -51,38 +68,50 @@ public class Crabby extends Entity {
 			}
 		}
 		else {
+			
 			switch (state) {
 			case IDLE:
 				ChangeState(RUNNING);
 				break;
+				
 			case RUNNING:
 				if (OnView(LevelSprites, player)) {
 					FaceTowardPlayer(player);
-					if (InAttackRange(player))
+					
+					if (InAttackRange(player)) {
 						ChangeState(ATTACK);
+					}
 				}
 
 				move(LevelSprites);
 				break;
+				
 			case ATTACK:
-				if (aniIndex == 0)
+				if (aniIndex == 0) {
 					attCheck = false;
-				if (aniIndex == 3 && !attCheck)
-				{
-					if (hitzone.intersects(player.hitbox))
+				}
+				
+				if (aniIndex == 3 && !attCheck) {
+					if (hitzone.intersects(player.hitbox)) {
 						player.health -= CRAB_DAM;
+					}
 					attCheck = true;
 				}
 				break;
 			}
+			
+			
 		}
 	}
 	
 	private void updateAnimation() {
 		aniTick++;
+		
 		if (aniTick >= NORMAL_SPEED) {
 			aniTick = 0;
 			aniIndex++;
+			
+			
 			if (aniIndex >= GetAniTotal(state)) {
 				aniIndex = 0;
 
@@ -94,7 +123,10 @@ public class Crabby extends Entity {
 						alive = false;
 						break;
 				}
+				
+				
 			}
+			
 		}
 	}
 
@@ -102,32 +134,43 @@ public class Crabby extends Entity {
 	private void move(int[][] LevelSprites) {
 		float xSpeed = 0;
 
-		if (direction == LEFT)
+		if (direction == LEFT) {
 			xSpeed = -walkSpeed;
-		else
+		}
+		else {
 			xSpeed = walkSpeed;
+		}
 
-		if (Movable(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, LevelSprites))
+		if (Movable(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, LevelSprites)) {
 			if (CheckFloor(hitbox, xSpeed, LevelSprites)) {
 				hitbox.x += xSpeed;
 				return;
 			}
+		}
 
-		if (direction == LEFT)
+		if (direction == LEFT) {
 			direction = RIGHT;
-		else
+
+		}
+		else {
 			direction = LEFT;
+		}
 	}
+	
+	// update facing direction base on player position - player near -> go back 2 player
+	// left
 
 	private void FaceTowardPlayer(Player player) {
-		if (player.hitbox.x > hitbox.x)
+		if (player.hitbox.x > hitbox.x) {
 			direction = RIGHT;
-		else
+		} else {
 			direction = LEFT;
 	}
+	}
+
 
 	private boolean OnView(int[][] LevelSprites, Player player) {
-		//check if player is on the same tiles 
+		//check if on the same row
 		if ((int) (player.getHitbox().y / Game.TILES_SIZE) == (int) (hitbox.y / Game.TILES_SIZE))
 			if (isPlayerInRange(player)) {
 				return true;
@@ -136,6 +179,7 @@ public class Crabby extends Entity {
 		return false;
 	}
 
+	// check if within range
 	private boolean isPlayerInRange(Player player) {
 		int possible = (int) Math.abs(player.hitbox.x - hitbox.x);
 		return possible <= attDis * 6;
@@ -150,6 +194,7 @@ public class Crabby extends Entity {
 		this.state = enemyState;
 		aniTick = 0;
 		aniIndex = 0;
+		
 	}
 
 	public void hurt(int amount) {
@@ -158,6 +203,7 @@ public class Crabby extends Entity {
 			ChangeState(DEAD);
 	}
 
+	// 
 
 	public void resetEnemy() {
 		hitbox.x = x;
@@ -171,20 +217,69 @@ public class Crabby extends Entity {
 
 	public boolean isAlive() {
 		return alive;
+		
 	}
+	
+	// add width scaling factor to rotate crab sprite
 	
 
 	public int Xrotate() {
-		if (direction == RIGHT)
+		if (direction == RIGHT) {
 			return width;
-		else
+		} else {
 			return 0;
+		}
 	}
 
 	public int Wrotate() {
-		if (direction == RIGHT)
+		if (direction == RIGHT) {
 			return -1;
-		else
+		} else {
 			return 1;
+		}
+		
+		
 	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -12,11 +12,13 @@ public class GameWindow {
 
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//anh cho vao khung
 		frame.add(panel);
 		frame.setResizable(false);
 		frame.pack();
 		frame.setLocationRelativeTo(null);       
 		frame.setVisible(true);
+		//tracking
 		frame.addWindowFocusListener(new WindowFocusListener() {
 			@Override
 			public void windowLostFocus(WindowEvent e) {
