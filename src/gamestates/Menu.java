@@ -17,7 +17,7 @@ public class Menu extends State {
 	public Menu(Game game) {
 		super(game);
 		loadImg();
-		bgMenu = LoadSave.GetImg("test.jpg");
+		bgMenu = LoadSave.GetImg("background2.jpg");
 
 	}
 
