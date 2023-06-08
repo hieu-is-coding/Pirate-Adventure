@@ -16,6 +16,7 @@ public class Level {
 	private BufferedImage image;
 	private int[][] LevelSprites;
 	private ArrayList<Crabby> crabies;
+	//check offset land
 	private int lvlTilesWide, maxTilesOffset, maxLvlOffset;
 	private Point playerSpawn;
 
@@ -29,13 +30,17 @@ public class Level {
 		playerSpawn = SetSpawn(image);
 	}
 
-
+	//return all private variables
 	public int getSpriteIndex(int x, int y) {
 		return LevelSprites[y][x];
 	}
 
 	public int[][] getLevelData() {
 		return LevelSprites;
+	}
+	
+	public int getTileOffset() {
+		return maxTilesOffset;
 	}
 
 	public int getLvlOffset() {

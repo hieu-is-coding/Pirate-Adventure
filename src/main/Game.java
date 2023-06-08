@@ -26,7 +26,8 @@ public class Game implements Runnable {
 
 	public Game() {
 		initClasses();
-
+		
+		// frame va panel
 		panel = new GamePanel(this);
 		window = new GameWindow(panel);
 		panel.setFocusable(true);
@@ -35,6 +36,7 @@ public class Game implements Runnable {
 		startGameLoop();
 	}
 
+	//tao audio,menu va playing
 	private void initClasses() {
 		audioPlayer = new AudioPlayer();
 		menu = new Menu(this);
@@ -78,7 +80,8 @@ public class Game implements Runnable {
 
 	@Override
 	public void run() {
-
+		
+		//set up ups and fps
 		double timePerFrame = 1000000000.0 / FPS;
 		double timePerUpdate = 1000000000.0 / UPS;
 
@@ -98,18 +101,19 @@ public class Game implements Runnable {
 			deltaF += (currentTime - previousTime) / timePerFrame;
 			previousTime = currentTime;
 
+			//update
 			if (deltaU >= 1) {
 				update();
 				updates++;
 				deltaU--;
 			}
-
+			//render
 			if (deltaF >= 1) {
 				panel.repaint();
 				frames++;
 				deltaF--;
 			}
-
+			//debug
 			if (System.currentTimeMillis() - lastCheck >= 1000) {
 				lastCheck = System.currentTimeMillis();
 //				System.out.println("FPS: " + frames + " | UPS: " + updates);

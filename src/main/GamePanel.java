@@ -17,7 +17,7 @@ public class GamePanel extends JPanel {
 		setPanelSize();
 		addInput();
 	}
-	
+	//gain control input
 	private void addInput() {
 		inputM = new MouseInputs(this);
 		addMouseListener(inputM);
@@ -31,14 +31,16 @@ public class GamePanel extends JPanel {
 	}
 
 	public void updateGame() {
-
+		game.update();
 	}
-
+	
+	//render
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		game.render(g);
 	}
 
+	
 	public Game getGame() {
 		return game;
 	}
