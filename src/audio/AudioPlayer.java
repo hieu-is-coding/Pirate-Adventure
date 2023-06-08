@@ -38,7 +38,7 @@ public class AudioPlayer {
 
 	private void getSongs() {
 		songs = new Clip[3];
-		songs[0] = getClip("menu");
+		songs[0] = getClip("test");
 		songs[1] = getClip("level1");
 		songs[2] = getClip("level2");
 	}
